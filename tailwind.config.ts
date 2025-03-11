@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -61,6 +62,32 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
+				},
+				safehaven: {
+					50: '#eaf7ff',
+					100: '#d9f1ff',
+					200: '#bae4ff',
+					300: '#8ed0ff',
+					400: '#57b1fd',
+					500: '#3492f9',
+					600: '#2275ed',
+					700: '#1e5fcf',
+					800: '#214fa8',
+					900: '#224483',
+					950: '#172952',
+				},
+				alert: {
+					50: '#fff6ed',
+					100: '#ffebd4',
+					200: '#ffd2a9',
+					300: '#ffb073',
+					400: '#ff8339',
+					500: '#ff6010',
+					600: '#fb4505',
+					700: '#c52e06',
+					800: '#9c280e',
+					900: '#7e230f',
+					950: '#440e05',
 				}
 			},
 			borderRadius: {
@@ -84,11 +111,16 @@ export default {
 					to: {
 						height: '0'
 					}
+				},
+				pulse: {
+					'0%, 100%': { opacity: '1' },
+					'50%': { opacity: '0.5' },
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
+				'accordion-up': 'accordion-up 0.2s ease-out',
+				'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
 			}
 		}
 	},
