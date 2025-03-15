@@ -6,9 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { MapPin, Bell, Ban, Clock, Shield, Lock, Settings } from "lucide-react";
-import LocationTracker from "@/components/dashboard/LocationTracker";
-import SafetyZones from "@/components/dashboard/SafetyZones";
+import { Bell, Ban, Clock, Shield, Lock, Settings } from "lucide-react";
 import ContentFiltering from "@/components/dashboard/ContentFiltering";
 import ChildrenOverview from "@/components/dashboard/ChildrenOverview";
 import ActivityTimeline from "@/components/dashboard/ActivityTimeline";
@@ -45,7 +43,6 @@ const ParentDashboard = () => {
             <Tabs defaultValue="overview" className="w-full">
               <TabsList className="mb-4">
                 <TabsTrigger value="overview">Overview</TabsTrigger>
-                <TabsTrigger value="location">Location & Zones</TabsTrigger>
                 <TabsTrigger value="content">Content Filtering</TabsTrigger>
                 <TabsTrigger value="activity">Activity</TabsTrigger>
               </TabsList>
@@ -65,13 +62,6 @@ const ParentDashboard = () => {
                       <div className="space-y-4">
                         <div className="flex items-center justify-between">
                           <div className="flex items-center">
-                            <MapPin className="mr-2 h-4 w-4 text-muted-foreground" />
-                            <span>Zone Departure Alerts</span>
-                          </div>
-                          <Badge className="bg-green-500">Active</Badge>
-                        </div>
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center">
                             <Ban className="mr-2 h-4 w-4 text-muted-foreground" />
                             <span>Content Blocking Alerts</span>
                           </div>
@@ -82,7 +72,7 @@ const ParentDashboard = () => {
                             <Clock className="mr-2 h-4 w-4 text-muted-foreground" />
                             <span>Screen Time Alerts</span>
                           </div>
-                          <Badge variant="outline">Disabled</Badge>
+                          <Badge className="bg-green-500">Active</Badge>
                         </div>
                         <Button 
                           className="w-full mt-2 bg-safehaven-600 hover:bg-safehaven-700"
@@ -103,9 +93,13 @@ const ParentDashboard = () => {
                     </CardHeader>
                     <CardContent>
                       <div className="space-y-2">
-                        <Button variant="outline" className="w-full justify-start">
-                          <MapPin className="mr-2 h-4 w-4" />
-                          Add Safe Zone
+                        <Button 
+                          variant="outline" 
+                          className="w-full justify-start"
+                          onClick={() => navigate("/screen-time")}
+                        >
+                          <Clock className="mr-2 h-4 w-4" />
+                          Manage Screen Time
                         </Button>
                         <Button variant="outline" className="w-full justify-start">
                           <Ban className="mr-2 h-4 w-4" />
@@ -123,11 +117,6 @@ const ParentDashboard = () => {
                     </CardContent>
                   </Card>
                 </div>
-              </TabsContent>
-              
-              <TabsContent value="location" className="space-y-4">
-                <LocationTracker />
-                <SafetyZones />
               </TabsContent>
               
               <TabsContent value="content" className="space-y-4">
@@ -156,11 +145,11 @@ const ParentDashboard = () => {
                     <p className="text-sm font-medium">Content Blocks</p>
                     <p className="text-2xl font-bold">12</p>
                   </div>
-                  <div>
-                    <p className="text-sm font-medium">Zone Alerts</p>
-                    <p className="text-2xl font-bold">1</p>
-                  </div>
-                  <Button variant="outline" className="w-full">
+                  <Button 
+                    variant="outline" 
+                    className="w-full"
+                    onClick={() => navigate("/screen-time")}
+                  >
                     View Full Report
                   </Button>
                 </div>

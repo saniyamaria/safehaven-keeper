@@ -5,29 +5,33 @@ import { Alert } from "@/types/alerts";
 export const alertsData: Alert[] = [
   {
     id: 1,
-    type: "Emergency",
+    type: "Screen Time",
     status: "Active",
     user: "Sarah",
-    location: "Downtown Area",
     time: "Just now",
     date: "Today",
+    message: "Daily limit exceeded",
+    app: "TikTok",
+    duration: "1h 15m over limit"
   },
   {
     id: 2,
-    type: "Boundary",
-    status: "Resolved",
+    type: "Content",
+    status: "Active",
     user: "Jack",
-    location: "Mall",
     time: "1 hour ago",
     date: "Today",
+    message: "Attempted to access blocked content",
+    app: "Web Browser"
   },
   {
     id: 3,
-    type: "Curfew",
+    type: "Screen Time",
     status: "Resolved",
     user: "Sarah",
-    location: "Friend's House",
     time: "Yesterday",
     date: "Yesterday",
+    message: "Device used during bedtime hours",
+    duration: "15 minutes"
   },
 ];

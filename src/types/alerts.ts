@@ -4,7 +4,10 @@ export interface Alert {
   type: string;
   status: string;
   user: string;
-  location: string;
+  location?: string;
   time: string;
   date: string;
+  message?: string;
+  app?: string;
+  duration?: string;
 }

@@ -95,8 +95,8 @@ const Navbar = () => {
           <Button variant="ghost" className={location.pathname === "/dashboard" ? "font-bold bg-accent" : ""} onClick={() => navigate("/dashboard")}>
             Dashboard
           </Button>
-          <Button variant="ghost" className={location.pathname === "/locations" ? "font-bold bg-accent" : ""} onClick={() => navigate("/locations")}>
-            Locations
+          <Button variant="ghost" className={location.pathname === "/screen-time" ? "font-bold bg-accent" : ""} onClick={() => navigate("/screen-time")}>
+            Screen Time
           </Button>
           <Button variant="ghost" className={location.pathname === "/messages" ? "font-bold bg-accent" : ""} onClick={() => navigate("/messages")}>
             Messages

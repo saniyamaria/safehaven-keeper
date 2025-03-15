@@ -2,7 +2,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { BellOff, Clock, MapPin, ShieldAlert } from "lucide-react";
+import { BellOff, Clock, Ban, AlertTriangle } from "lucide-react";
 import { Alert } from "@/types/alerts";
 
 interface ResolvedAlertsListProps {
@@ -30,7 +30,13 @@ const ResolvedAlertsList = ({ alerts }: ResolvedAlertsListProps) => {
             <div className="flex justify-between items-start">
               <div>
                 <div className="flex items-center gap-2">
-                  <ShieldAlert className="h-5 w-5 text-gray-400" />
+                  {alert.type === "Screen Time" ? (
+                    <Clock className="h-5 w-5 text-gray-400" />
+                  ) : alert.type === "Content" ? (
+                    <Ban className="h-5 w-5 text-gray-400" />
+                  ) : (
+                    <AlertTriangle className="h-5 w-5 text-gray-400" />
+                  )}
                   <CardTitle className="text-gray-500">{alert.type} Alert</CardTitle>
                 </div>
                 <CardContent className="p-0">From {alert.user}</CardContent>
@@ -43,10 +49,26 @@ const ResolvedAlertsList = ({ alerts }: ResolvedAlertsListProps) => {
           
           <CardContent>
             <div className="space-y-2 pt-2">
-              <div className="flex items-center text-sm">
-                <MapPin className="mr-2 h-4 w-4 text-muted-foreground" />
-                <span>{alert.location}</span>
-              </div>
+              {alert.message && (
+                <div className="text-sm font-medium text-gray-500">
+                  {alert.message}
+                </div>
+              )}
+              
+              {alert.app && (
+                <div className="flex items-center text-sm">
+                  <Ban className="mr-2 h-4 w-4 text-muted-foreground" />
+                  <span>App: {alert.app}</span>
+                </div>
+              )}
+              
+              {alert.duration && (
+                <div className="flex items-center text-sm">
+                  <Clock className="mr-2 h-4 w-4 text-muted-foreground" />
+                  <span>{alert.duration}</span>
+                </div>
+              )}
+              
               <div className="flex items-center text-sm">
                 <Clock className="mr-2 h-4 w-4 text-muted-foreground" />
                 <span>{alert.time}</span>

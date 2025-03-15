@@ -11,7 +11,7 @@ import RoleSelection from "./pages/RoleSelection";
 import Dashboard from "./pages/Dashboard";
 import ParentDashboard from "./pages/ParentDashboard";
 import ChildDashboard from "./pages/ChildDashboard";
-import Locations from "./pages/Locations";
+import ScreenTime from "./pages/ScreenTime";
 import Messages from "./pages/Messages";
 import Alerts from "./pages/Alerts";
 import Profile from "./pages/Profile";
@@ -33,7 +33,7 @@ const App = () => (
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/parent-dashboard" element={<ParentDashboard />} />
           <Route path="/child-dashboard" element={<ChildDashboard />} />
-          <Route path="/locations" element={<Locations />} />
+          <Route path="/screen-time" element={<ScreenTime />} />
           <Route path="/messages" element={<Messages />} />
           <Route path="/alerts" element={<Alerts />} />
           <Route path="/profile" element={<Profile />} />
