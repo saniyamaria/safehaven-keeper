@@ -6,7 +6,7 @@ const Signup = () => {
   return (
     <AuthLayout 
       title="Create Your Account" 
-      subtitle="Join SafeHaven to keep your loved ones safe and connected"
+      subtitle="Join KidShield to keep your children safe online"
     >
       <SignupForm />
     </AuthLayout>

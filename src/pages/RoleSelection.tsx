@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import AuthLayout from "./AuthLayout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Shield, User, Users } from "lucide-react";
+import { Shield, User } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 const RoleSelection = () => {
@@ -37,7 +37,7 @@ const RoleSelection = () => {
   return (
     <AuthLayout
       title="Select Your Role"
-      subtitle="Choose your role in the SafeHaven family protection system"
+      subtitle="Choose your role in the KidShield protection system"
     >
       <div className="w-full max-w-md mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
@@ -49,7 +49,7 @@ const RoleSelection = () => {
           >
             <CardContent className="p-6 flex flex-col items-center text-center">
               <div className="w-16 h-16 rounded-full bg-safehaven-50 flex items-center justify-center mb-4">
-                <Users className="h-8 w-8 text-safehaven-600" />
+                <Shield className="h-8 w-8 text-safehaven-600" />
               </div>
               <h3 className="text-lg font-semibold mb-2">Parent/Guardian</h3>
               <p className="text-sm text-muted-foreground">

@@ -40,7 +40,7 @@ const SignupForm = () => {
       
       toast({
         title: "Account created",
-        description: "Welcome to SafeHaven!",
+        description: "Welcome to KidShield!",
       });
       navigate("/role-selection");
     }, 1500);
@@ -51,7 +51,7 @@ const SignupForm = () => {
       <CardHeader className="space-y-1">
         <CardTitle className="text-2xl font-bold text-center">Create an account</CardTitle>
         <CardDescription className="text-center">
-          Enter your information to create your SafeHaven account
+          Enter your information to create your KidShield account
         </CardDescription>
       </CardHeader>
       <CardContent>

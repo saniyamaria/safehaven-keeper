@@ -5,8 +5,8 @@ import LoginForm from "@/components/auth/LoginForm";
 const Login = () => {
   return (
     <AuthLayout 
-      title="Welcome to SafeHaven" 
-      subtitle="Sign in to your account to access your family's safety tools"
+      title="Welcome to KidShield" 
+      subtitle="Sign in to your account to access your child safety tools"
     >
       <LoginForm />
     </AuthLayout>

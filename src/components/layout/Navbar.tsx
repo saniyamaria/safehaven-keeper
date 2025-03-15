@@ -53,7 +53,7 @@ const Navbar = () => {
         <div className="container flex h-16 items-center justify-between">
           <div className="flex items-center gap-2">
             <Shield className="h-6 w-6 text-safehaven-600" />
-            <span className="text-xl font-bold">SafeHaven</span>
+            <span className="text-xl font-bold">KidShield</span>
           </div>
           <div className="flex items-center gap-2">
             <Button variant="outline" onClick={() => navigate("/login")}>
@@ -73,7 +73,7 @@ const Navbar = () => {
       <div className="container flex h-16 items-center justify-between">
         <div className="flex items-center gap-2">
           <Shield className="h-6 w-6 text-safehaven-600" />
-          <span className="text-xl font-bold hidden md:inline-block">SafeHaven</span>
+          <span className="text-xl font-bold hidden md:inline-block">KidShield</span>
         </div>
 
         {/* Mobile Navigation */}

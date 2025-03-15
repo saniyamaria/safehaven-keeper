@@ -16,7 +16,7 @@ export function MobileNav({ onLogout }: MobileNavProps) {
     <div className="flex flex-col h-full py-4">
       <div className="flex items-center gap-2 px-2">
         <Shield className="h-6 w-6 text-safehaven-600" />
-        <span className="text-xl font-bold">SafeHaven</span>
+        <span className="text-xl font-bold">KidShield</span>
       </div>
       <Separator className="my-4" />
       <nav className="flex flex-col gap-2">

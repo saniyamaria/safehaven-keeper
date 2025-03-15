@@ -1,95 +1,65 @@
 
-import { useState } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { MapPin, Plus, Home, School, Park, Building } from "lucide-react";
+import { Home, School, MapPin } from "lucide-react";
 
-// Mock safety zones data
-const safetyZonesData = [
+// Mock data for safety zones
+const safeZones = [
   {
     id: 1,
     name: "Home",
-    radius: 200,
+    radius: "150m",
     address: "123 Main Street",
     active: true,
-    icon: Home,
+    icon: <Home className="h-4 w-4" />,
   },
   {
     id: 2,
     name: "School",
-    radius: 300,
-    address: "456 Education Ave",
+    radius: "200m",
+    address: "456 Education Blvd",
     active: true,
-    icon: School,
+    icon: <School className="h-4 w-4" />,
   },
   {
     id: 3,
-    name: "Grandparents' House",
-    radius: 150,
-    address: "789 Family Lane",
-    active: true,
-    icon: Building,
-  },
-  {
-    id: 4,
-    name: "Basketball Court",
-    radius: 100,
-    address: "101 Sports Center Dr",
+    name: "Grandparents",
+    radius: "100m",
+    address: "789 Elder Lane",
     active: false,
-    icon: Park,
+    icon: <Home className="h-4 w-4" />,
   }
 ];
 
 const SafetyZones = () => {
-  const [zones, setZones] = useState(safetyZonesData);
-
-  const toggleZoneStatus = (id: number) => {
-    setZones(zones.map(zone => 
-      zone.id === id ? { ...zone, active: !zone.active } : zone
-    ));
-  };
-
   return (
-    <Card className="w-full">
+    <Card>
       <CardHeader className="flex flex-row items-center justify-between">
-        <div>
-          <CardTitle>Safety Zones</CardTitle>
-          <CardDescription>
-            Define areas where your children are allowed to go
-          </CardDescription>
-        </div>
-        <Button className="bg-safehaven-600 hover:bg-safehaven-700">
-          <Plus className="h-4 w-4 mr-2" />
-          Add New Zone
+        <CardTitle>Safety Zones</CardTitle>
+        <Button variant="outline" size="sm">
+          <MapPin className="h-4 w-4 mr-2" />
+          Add Zone
         </Button>
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
-          {zones.map((zone) => (
-            <div key={zone.id} className="flex items-center justify-between border-b pb-4">
-              <div className="flex items-center">
-                <div className="w-10 h-10 rounded-full bg-safehaven-100 flex items-center justify-center mr-3">
-                  <zone.icon className="h-5 w-5 text-safehaven-600" />
+          {safeZones.map(zone => (
+            <div key={zone.id} className="flex items-center justify-between border-b pb-3 last:border-0 last:pb-0">
+              <div className="flex items-center gap-3">
+                <div className={`w-8 h-8 rounded-full flex items-center justify-center ${zone.active ? 'bg-safehaven-100' : 'bg-gray-100'}`}>
+                  {zone.icon}
                 </div>
                 <div>
-                  <h3 className="font-medium">{zone.name}</h3>
-                  <div className="flex items-center text-sm text-muted-foreground">
-                    <MapPin className="h-3 w-3 mr-1" />
-                    {zone.address}
-                  </div>
-                  <div className="text-xs text-muted-foreground mt-1">
-                    Radius: {zone.radius}m
-                  </div>
+                  <h4 className="font-medium">{zone.name}</h4>
+                  <p className="text-sm text-muted-foreground">{zone.address}</p>
                 </div>
               </div>
-              <div className="flex items-center">
-                <Badge className={zone.active ? "bg-green-500 mr-4" : "bg-gray-300 mr-4"}>
+              <div className="flex items-center gap-2">
+                <Badge variant={zone.active ? "default" : "outline"} className={zone.active ? "bg-safehaven-600" : ""}>
                   {zone.active ? "Active" : "Inactive"}
                 </Badge>
-                <Button variant="outline" size="sm" onClick={() => toggleZoneStatus(zone.id)}>
-                  {zone.active ? "Disable" : "Enable"}
-                </Button>
+                <span className="text-xs text-muted-foreground">{zone.radius}</span>
               </div>
             </div>
           ))}

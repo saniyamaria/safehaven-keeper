@@ -16,10 +16,10 @@ const LandingPage = () => {
               <Shield className="h-8 w-8 text-safehaven-600" />
             </div>
             <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl text-safehaven-950">
-              Protect What Matters Most
+              Protecting Children Online
             </h1>
             <p className="max-w-[700px] text-gray-500 md:text-xl">
-              SafeHaven keeps your family connected and protected without invading privacy.
+              KidShield keeps parents connected with their children while ensuring online safety.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 mt-8">
               <Button 
@@ -46,10 +46,10 @@ const LandingPage = () => {
         <div className="container px-4 md:px-6">
           <div className="flex flex-col items-center justify-center space-y-4 text-center mb-12">
             <h2 className="text-3xl font-bold tracking-tighter md:text-4xl text-safehaven-900">
-              Features Designed for Families
+              Features Designed for Child Safety
             </h2>
             <p className="max-w-[700px] text-gray-500 md:text-lg">
-              Simple, intuitive tools that help you stay connected while respecting boundaries.
+              Simple, intuitive tools that help parents protect their children online.
             </p>
           </div>
           
@@ -60,7 +60,7 @@ const LandingPage = () => {
               </div>
               <h3 className="text-xl font-bold mb-2 text-safehaven-900">Location Awareness</h3>
               <p className="text-gray-500">
-                Know when family members arrive at and leave important locations.
+                Know when your child arrives at and leaves important locations.
               </p>
             </div>
             
@@ -70,7 +70,7 @@ const LandingPage = () => {
               </div>
               <h3 className="text-xl font-bold mb-2 text-safehaven-900">Emergency Alerts</h3>
               <p className="text-gray-500">
-                One-touch alerts to quickly notify your trusted circle in case of emergency.
+                One-touch alerts to quickly notify parents in case of emergency.
               </p>
             </div>
             
@@ -80,7 +80,7 @@ const LandingPage = () => {
               </div>
               <h3 className="text-xl font-bold mb-2 text-safehaven-900">Secure Messaging</h3>
               <p className="text-gray-500">
-                Private communication channels for your family's conversations.
+                Private communication channels between parents and children.
               </p>
             </div>
           </div>
@@ -92,10 +92,10 @@ const LandingPage = () => {
         <div className="container px-4 md:px-6">
           <div className="flex flex-col items-center justify-center space-y-4 text-center mb-12">
             <h2 className="text-3xl font-bold tracking-tighter md:text-4xl text-safehaven-900">
-              Why Choose SafeHaven?
+              Why Choose KidShield?
             </h2>
             <p className="max-w-[700px] text-gray-500 md:text-lg">
-              Our approach puts safety first without compromising on privacy.
+              Our approach puts child safety first while respecting parental authority.
             </p>
           </div>
           
@@ -103,9 +103,9 @@ const LandingPage = () => {
             <div className="flex gap-4 items-start">
               <CheckCircle2 className="h-6 w-6 text-safehaven-600 mt-1 flex-shrink-0" />
               <div>
-                <h3 className="text-lg font-semibold mb-2 text-safehaven-900">Privacy Focused</h3>
+                <h3 className="text-lg font-semibold mb-2 text-safehaven-900">COPPA Compliant</h3>
                 <p className="text-gray-500">
-                  We believe in safety with dignity. Location tracking is consent-based and never invasive.
+                  We strictly adhere to the Children's Online Privacy Protection Act guidelines.
                 </p>
               </div>
             </div>
@@ -113,9 +113,9 @@ const LandingPage = () => {
             <div className="flex gap-4 items-start">
               <CheckCircle2 className="h-6 w-6 text-safehaven-600 mt-1 flex-shrink-0" />
               <div>
-                <h3 className="text-lg font-semibold mb-2 text-safehaven-900">Family-First Design</h3>
+                <h3 className="text-lg font-semibold mb-2 text-safehaven-900">Child-First Design</h3>
                 <p className="text-gray-500">
-                  Created for modern families who want to stay connected in a busy world.
+                  Created for modern parents who want to keep their children safe online.
                 </p>
               </div>
             </div>
@@ -123,9 +123,9 @@ const LandingPage = () => {
             <div className="flex gap-4 items-start">
               <CheckCircle2 className="h-6 w-6 text-safehaven-600 mt-1 flex-shrink-0" />
               <div>
-                <h3 className="text-lg font-semibold mb-2 text-safehaven-900">Quick Emergency Response</h3>
+                <h3 className="text-lg font-semibold mb-2 text-safehaven-900">Content Filtering</h3>
                 <p className="text-gray-500">
-                  When seconds matter, our emergency alert system ensures help is on the way.
+                  Advanced filters block inappropriate content and websites automatically.
                 </p>
               </div>
             </div>
@@ -135,7 +135,7 @@ const LandingPage = () => {
               <div>
                 <h3 className="text-lg font-semibold mb-2 text-safehaven-900">Simple to Use</h3>
                 <p className="text-gray-500">
-                  Intuitive design means the whole family can use SafeHaven, regardless of tech skills.
+                  Intuitive design means both parents and children can use KidShield with ease.
                 </p>
               </div>
             </div>
@@ -146,7 +146,7 @@ const LandingPage = () => {
               className="bg-safehaven-600 hover:bg-safehaven-700 text-lg px-8 py-6 h-auto"
               onClick={() => navigate("/signup")}
             >
-              Join SafeHaven Today
+              Join KidShield Today
               <ChevronRight className="ml-2 h-4 w-4" />
             </Button>
           </div>
@@ -159,10 +159,10 @@ const LandingPage = () => {
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <div className="flex items-center gap-2">
               <Shield className="h-5 w-5 text-safehaven-600" />
-              <span className="text-lg font-semibold">SafeHaven</span>
+              <span className="text-lg font-semibold">KidShield</span>
             </div>
             <p className="text-sm text-gray-500">
-              © 2023 SafeHaven. All rights reserved.
+              © 2023 KidShield. All rights reserved.
             </p>
           </div>
         </div>
