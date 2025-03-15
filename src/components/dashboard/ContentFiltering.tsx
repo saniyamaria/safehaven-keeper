@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
@@ -9,40 +9,91 @@ import { Ban, AlertTriangle, Plus, X } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
-
-// Mock blocked websites data
-const blockedWebsitesData = [
-  { id: 1, domain: "inappropriate-content.com", category: "Adult Content" },
-  { id: 2, domain: "violentgames.com", category: "Violence" },
-  { id: 3, domain: "gambling-site.com", category: "Gambling" },
-  { id: 4, domain: "social-media-example.com", category: "Social Media" },
-];
-
-// Mock content filter categories
-const contentFiltersData = [
-  { id: 1, name: "Adult Content", active: true, severity: "high" },
-  { id: 2, name: "Violence", active: true, severity: "high" },
-  { id: 3, name: "Gambling", active: true, severity: "high" },
-  { id: 4, name: "Social Media", active: true, severity: "medium" },
-  { id: 5, name: "Gaming", active: false, severity: "low" },
-  { id: 6, name: "Streaming", active: false, severity: "low" },
-];
+import { 
+  getContentFilters, 
+  updateContentFilter, 
+  getBlockedWebsites, 
+  addBlockedWebsite, 
+  removeBlockedWebsite, 
+  getFilterSettings, 
+  updateFilterSettings 
+} from "@/services/contentFilteringService";
+import { ContentFilter, BlockedWebsite, FilterSettings } from "@/types/api";
 
 const ContentFiltering = () => {
-  const [blockedWebsites, setBlockedWebsites] = useState(blockedWebsitesData);
-  const [contentFilters, setContentFilters] = useState(contentFiltersData);
+  const [contentFilters, setContentFilters] = useState<ContentFilter[]>([]);
+  const [blockedWebsites, setBlockedWebsites] = useState<BlockedWebsite[]>([]);
+  const [filterSettings, setFilterSettings] = useState<FilterSettings | null>(null);
   const [newDomain, setNewDomain] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
   const { toast } = useToast();
 
-  const toggleContentFilter = (id: number) => {
-    setContentFilters(filters => 
-      filters.map(filter => 
-        filter.id === id ? { ...filter, active: !filter.active } : filter
-      )
-    );
+  useEffect(() => {
+    async function loadData() {
+      setIsLoading(true);
+      try {
+        const [filtersRes, websitesRes, settingsRes] = await Promise.all([
+          getContentFilters(),
+          getBlockedWebsites(),
+          getFilterSettings()
+        ]);
+
+        if (filtersRes.success && filtersRes.data) {
+          setContentFilters(filtersRes.data);
+        }
+
+        if (websitesRes.success && websitesRes.data) {
+          setBlockedWebsites(websitesRes.data);
+        }
+
+        if (settingsRes.success && settingsRes.data) {
+          setFilterSettings(settingsRes.data);
+        }
+      } catch (error) {
+        console.error("Error loading content filtering data:", error);
+        toast({
+          title: "Error loading data",
+          description: "Could not load content filtering settings",
+          variant: "destructive",
+        });
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    loadData();
+  }, [toast]);
+
+  const toggleContentFilter = async (id: string) => {
+    const filter = contentFilters.find(f => f.id === id);
+    if (!filter) return;
+
+    const updatedFilter = { ...filter, active: !filter.active };
+    
+    try {
+      const response = await updateContentFilter(updatedFilter);
+      
+      if (response.success) {
+        setContentFilters(filters => 
+          filters.map(f => f.id === id ? updatedFilter : f)
+        );
+        
+        toast({
+          title: updatedFilter.active ? "Category Blocked" : "Category Allowed",
+          description: `${filter.name} is now ${updatedFilter.active ? "blocked" : "allowed"}`,
+        });
+      }
+    } catch (error) {
+      console.error("Error updating content filter:", error);
+      toast({
+        title: "Update failed",
+        description: "Could not update content filter",
+        variant: "destructive",
+      });
+    }
   };
 
-  const addBlockedWebsite = () => {
+  const handleAddBlockedWebsite = async () => {
     if (!newDomain) {
       toast({
         title: "Please enter a domain",
@@ -52,31 +103,89 @@ const ContentFiltering = () => {
       return;
     }
 
-    setBlockedWebsites([
-      ...blockedWebsites,
-      { 
-        id: blockedWebsites.length + 1, 
-        domain: newDomain, 
-        category: "Custom Block" 
+    try {
+      const response = await addBlockedWebsite(newDomain, "Custom Block");
+      
+      if (response.success && response.data) {
+        setBlockedWebsites(prev => [response.data!, ...prev]);
+        setNewDomain("");
+        
+        toast({
+          title: "Website blocked",
+          description: `${newDomain} has been added to the block list`,
+        });
       }
-    ]);
-    
-    setNewDomain("");
-    
-    toast({
-      title: "Website blocked",
-      description: `${newDomain} has been added to the block list`,
-    });
+    } catch (error) {
+      console.error("Error adding blocked website:", error);
+      toast({
+        title: "Failed to block website",
+        description: "Could not add website to block list",
+        variant: "destructive",
+      });
+    }
   };
 
-  const removeBlockedWebsite = (id: number) => {
-    setBlockedWebsites(blockedWebsites.filter(site => site.id !== id));
-    
-    toast({
-      title: "Website unblocked",
-      description: "The website has been removed from the block list",
-    });
+  const handleRemoveBlockedWebsite = async (id: string) => {
+    try {
+      const response = await removeBlockedWebsite(id);
+      
+      if (response.success) {
+        setBlockedWebsites(blockedWebsites.filter(site => site.id !== id));
+        
+        toast({
+          title: "Website unblocked",
+          description: "The website has been removed from the block list",
+        });
+      }
+    } catch (error) {
+      console.error("Error removing blocked website:", error);
+      toast({
+        title: "Failed to unblock website",
+        description: "Could not remove website from block list",
+        variant: "destructive",
+      });
+    }
   };
+
+  const toggleFilterSetting = async (setting: keyof FilterSettings) => {
+    if (!filterSettings) return;
+    
+    const updatedSettings = { 
+      ...filterSettings, 
+      [setting]: !filterSettings[setting] 
+    };
+    
+    try {
+      const response = await updateFilterSettings(updatedSettings);
+      
+      if (response.success && response.data) {
+        setFilterSettings(response.data);
+        
+        toast({
+          title: "Settings updated",
+          description: `${setting} is now ${updatedSettings[setting] ? "enabled" : "disabled"}`,
+        });
+      }
+    } catch (error) {
+      console.error("Error updating filter settings:", error);
+      toast({
+        title: "Failed to update settings",
+        description: "Could not update filter settings",
+        variant: "destructive",
+      });
+    }
+  };
+
+  if (isLoading) {
+    return (
+      <Card className="w-full">
+        <CardHeader>
+          <CardTitle>Content Filtering</CardTitle>
+          <CardDescription>Loading content filtering settings...</CardDescription>
+        </CardHeader>
+      </Card>
+    );
+  }
 
   return (
     <Card className="w-full">
@@ -148,7 +257,7 @@ const ContentFiltering = () => {
                 />
                 <Button 
                   className="bg-safehaven-600 hover:bg-safehaven-700"
-                  onClick={addBlockedWebsite}
+                  onClick={handleAddBlockedWebsite}
                 >
                   <Plus className="h-4 w-4 mr-2" />
                   Block
@@ -167,7 +276,7 @@ const ContentFiltering = () => {
                     <Button 
                       variant="ghost" 
                       size="sm" 
-                      onClick={() => removeBlockedWebsite(site.id)}
+                      onClick={() => handleRemoveBlockedWebsite(site.id)}
                     >
                       <X className="h-4 w-4 text-red-500" />
                     </Button>
@@ -178,47 +287,61 @@ const ContentFiltering = () => {
           </TabsContent>
           
           <TabsContent value="settings">
-            <div className="space-y-6">
-              <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <Label>Safe Search Enforcement</Label>
-                  <Switch defaultChecked />
+            {filterSettings && (
+              <div className="space-y-6">
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <Label>Safe Search Enforcement</Label>
+                    <Switch 
+                      checked={filterSettings.safeSearchEnabled}
+                      onCheckedChange={() => toggleFilterSetting('safeSearchEnabled')}
+                    />
+                  </div>
+                  <p className="text-sm text-muted-foreground">
+                    Force safe search on Google, Bing, and other search engines
+                  </p>
                 </div>
-                <p className="text-sm text-muted-foreground">
-                  Force safe search on Google, Bing, and other search engines
-                </p>
-              </div>
-              
-              <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <Label>YouTube Restricted Mode</Label>
-                  <Switch defaultChecked />
+                
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <Label>YouTube Restricted Mode</Label>
+                    <Switch 
+                      checked={filterSettings.youtubeRestrictedMode}
+                      onCheckedChange={() => toggleFilterSetting('youtubeRestrictedMode')}
+                    />
+                  </div>
+                  <p className="text-sm text-muted-foreground">
+                    Enable YouTube's restricted mode to filter inappropriate content
+                  </p>
                 </div>
-                <p className="text-sm text-muted-foreground">
-                  Enable YouTube's restricted mode to filter inappropriate content
-                </p>
-              </div>
-              
-              <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <Label>Block App Store Downloads</Label>
-                  <Switch defaultChecked />
+                
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <Label>Block App Store Downloads</Label>
+                    <Switch 
+                      checked={filterSettings.blockAppStoreDownloads}
+                      onCheckedChange={() => toggleFilterSetting('blockAppStoreDownloads')}
+                    />
+                  </div>
+                  <p className="text-sm text-muted-foreground">
+                    Require parent approval for new app installations
+                  </p>
                 </div>
-                <p className="text-sm text-muted-foreground">
-                  Require parent approval for new app installations
-                </p>
-              </div>
-              
-              <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <Label>Image Content Filtering</Label>
-                  <Switch defaultChecked />
+                
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <Label>Image Content Filtering</Label>
+                    <Switch 
+                      checked={filterSettings.imageContentFilteringEnabled}
+                      onCheckedChange={() => toggleFilterSetting('imageContentFilteringEnabled')}
+                    />
+                  </div>
+                  <p className="text-sm text-muted-foreground">
+                    Block inappropriate images across all websites and apps
+                  </p>
                 </div>
-                <p className="text-sm text-muted-foreground">
-                  Block inappropriate images across all websites and apps
-                </p>
               </div>
-            </div>
+            )}
           </TabsContent>
         </Tabs>
       </CardContent>
