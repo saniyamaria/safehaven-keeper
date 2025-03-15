@@ -29,7 +29,7 @@ const LoginForm = () => {
         title: "Login successful",
         description: "Welcome back to SafeHaven",
       });
-      navigate("/dashboard");
+      navigate("/role-selection");
     }, 1500);
   };
 

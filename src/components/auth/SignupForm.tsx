@@ -34,11 +34,15 @@ const SignupForm = () => {
     // Mock signup process - in a real app, this would create a user in the backend
     setTimeout(() => {
       setIsLoading(false);
+      
+      // Store user data in localStorage
+      localStorage.setItem("user", JSON.stringify({ email, name }));
+      
       toast({
         title: "Account created",
         description: "Welcome to SafeHaven!",
       });
-      navigate("/login");
+      navigate("/role-selection");
     }, 1500);
   };
 
